@@ -1,0 +1,1255 @@
+{
+  "schema_version": "1.0.0",
+  "bank_id": "lesbti-relationship-gas-cn-v1",
+  "version": "2026-05-19",
+  "locale": "zh-CN",
+  "title": "LesBTI 关系气场测试题库",
+  "subtitle": "35 道原创场景单选题，输出主结果、8 维雷达和派生气场条",
+  "authoring_strategy": "research_informed_original_situational_items",
+  "question_format": "single_choice_four_options",
+  "question_count": 35,
+  "draw_policy": {
+    "mode": "fixed_order",
+    "draw_count": 35,
+    "shuffle_question_order": false,
+    "shuffle_option_order": false,
+    "required_answer_count": 35
+  },
+  "notices": [
+    "本题库面向关系互动风格的自我探索，不构成医学、心理或身份诊断。",
+    "题目为基于公开研究主题自主撰写的原创场景题，不直接复用现成量表或商业测试原文。",
+    "结果中的社群气场标签仅作风格化表达，不应被当作真实身份判定。"
+  ],
+  "dimensions": [
+    {
+      "id": "traction",
+      "label": "牵引张力",
+      "left_label": "随缘克制",
+      "right_label": "主动靠近",
+      "description": "靠近、拉近、推进关系的能量。"
+    },
+    {
+      "id": "boundary",
+      "label": "边界清晰",
+      "left_label": "容易模糊",
+      "right_label": "分寸很稳",
+      "description": "公开范围、社交距离、私人空间与底线表达。"
+    },
+    {
+      "id": "leadership",
+      "label": "主导感",
+      "left_label": "顺势跟随",
+      "right_label": "引导节奏",
+      "description": "决策、推进、定节奏时的引导倾向。"
+    },
+    {
+      "id": "directness",
+      "label": "直球表达",
+      "left_label": "拐弯克制",
+      "right_label": "说得明白",
+      "description": "表达喜欢、不满、确认需求时是否直接。"
+    },
+    {
+      "id": "empathy",
+      "label": "共情柔软",
+      "left_label": "先讲道理",
+      "right_label": "先接住情绪",
+      "description": "能否优先感受对方的情绪状态。"
+    },
+    {
+      "id": "care",
+      "label": "照顾倾向",
+      "left_label": "各顾各的",
+      "right_label": "很会照料",
+      "description": "安抚、照看、记细节、主动补位的倾向。"
+    },
+    {
+      "id": "stability",
+      "label": "关系稳定",
+      "left_label": "波动明显",
+      "right_label": "节奏可预期",
+      "description": "在修复、持续投入和关系节奏上的稳定性。"
+    },
+    {
+      "id": "depth",
+      "label": "情感深度",
+      "left_label": "点到即止",
+      "right_label": "容易走深",
+      "description": "是否倾向进入高浓度的情感连接。"
+    }
+  ],
+  "styles": [
+    {
+      "id": "direct_push",
+      "label": "直球推进型",
+      "subtitle": "主动、直接、会把关系往前推"
+    },
+    {
+      "id": "soft_lead",
+      "label": "温柔掌舵型",
+      "subtitle": "外在柔和，内里很会稳住节奏"
+    },
+    {
+      "id": "reverse_gap",
+      "label": "反差掌控型",
+      "subtitle": "看起来在顺着你，其实暗中拿着方向盘"
+    },
+    {
+      "id": "high_sensitive",
+      "label": "高敏拉扯型",
+      "subtitle": "情感浓度高，靠近和顾虑常常一起出现"
+    }
+  ],
+  "scoring": {
+    "primary_metric": "style_votes",
+    "style_percentage_formula": "style_percentage = style_votes / answered_count",
+    "dimension_points": {
+      "direct_push": {
+        "traction": 3,
+        "boundary": 1,
+        "leadership": 3,
+        "directness": 3,
+        "empathy": 0,
+        "care": 0,
+        "stability": 1,
+        "depth": 1
+      },
+      "soft_lead": {
+        "traction": 2,
+        "boundary": 2,
+        "leadership": 2,
+        "directness": 1,
+        "empathy": 3,
+        "care": 3,
+        "stability": 3,
+        "depth": 1
+      },
+      "reverse_gap": {
+        "traction": 1,
+        "boundary": 3,
+        "leadership": 3,
+        "directness": 1,
+        "empathy": 1,
+        "care": 1,
+        "stability": 2,
+        "depth": 0
+      },
+      "high_sensitive": {
+        "traction": 3,
+        "boundary": 0,
+        "leadership": 0,
+        "directness": 2,
+        "empathy": 2,
+        "care": 1,
+        "stability": 0,
+        "depth": 3
+      }
+    },
+    "dimension_average_formula": "dimension_average = dimension_sum / answered_count",
+    "dimension_percentage_formula": "dimension_percentage = dimension_average / 3 * 100",
+    "primary_style_rule": [
+      "先按 style_votes 统计四类选项被选中的次数。",
+      "票数最高的类型作为主结果。",
+      "如果最高票并列，则优先比较该用户 8 维雷达与四类 style dimension centroid 的接近度。",
+      "如果仍然并列，则将并列项作为次级倾向并在结果页提示。"
+    ],
+    "result_page_distribution_order": [
+      "direct_push",
+      "soft_lead",
+      "reverse_gap",
+      "high_sensitive"
+    ]
+  },
+  "derived_bars": [
+    {
+      "id": "mei_energy",
+      "label": "妹感",
+      "formula": "empathy*0.35 + care*0.25 + depth*0.25 + traction*0.15"
+    },
+    {
+      "id": "jie_energy",
+      "label": "姐感",
+      "formula": "leadership*0.35 + boundary*0.25 + stability*0.2 + care*0.2"
+    },
+    {
+      "id": "s_energy",
+      "label": "主导感",
+      "formula": "leadership*0.45 + directness*0.25 + traction*0.2 + boundary*0.1"
+    },
+    {
+      "id": "m_energy",
+      "label": "跟随感",
+      "formula": "empathy*0.3 + care*0.25 + depth*0.25 + traction*0.2"
+    },
+    {
+      "id": "steady_energy",
+      "label": "稳定感",
+      "formula": "stability*0.5 + boundary*0.25 + empathy*0.15 + care*0.1"
+    },
+    {
+      "id": "spark_energy",
+      "label": "直球感",
+      "formula": "directness*0.45 + traction*0.35 + depth*0.2"
+    }
+  ],
+  "result_page_copy": {
+    "report_title": "你的 LesBTI 关系气场报告",
+    "report_subtitle": "基于关系节奏、边界感与亲密表达的原创测试",
+    "distribution_title": "关系气场分布",
+    "about_title": "你的关系气场",
+    "traits_title": "维度拆解",
+    "advice_title": "相处建议",
+    "bars_title": "派生气场条",
+    "footer_disclaimer": "这份结果更适合作为自我了解与关系反思的参考，并不能替代专业心理咨询、法律意见或真实身份判定。"
+  },
+  "result_profiles": {
+    "direct_push": {
+      "label": "直球推进型",
+      "subtitle": "越明确，越有安全感",
+      "about": "你是「直球推进型」：行为上总是更快一步的人，喜欢会说，想见会约，不舒服也会点出来。你不太能接受关系长期悬着，心理上更吃明确、回应和落地感；只要方向定了，你就会很愿意把心意继续往前推。",
+      "traits": [
+        "不太喜欢关系一直停在模糊地带",
+        "遇到喜欢的人时会更快给出信号",
+        "在节奏上更愿意先动起来，而不是一直等",
+        "表达需求和不满时通常比较直接"
+      ],
+      "advice": [
+        "直球是优势，但也要给对方一点消化空间",
+        "推进关系时，记得顺手确认对方的舒适度",
+        "如果对方慢热，不一定代表她没有心"
+      ]
+    },
+    "soft_lead": {
+      "label": "温柔掌舵型",
+      "subtitle": "柔和地推进，安静地掌舵",
+      "about": "你是「温柔掌舵型」：表面上不抢风头，实际上一直在稳住关系的温度和节奏。你很少用强硬的方式压人，却总能把情绪、细节和场面托得很顺；别人以为你在退让，很多时候其实是你在用柔和换取更长久的主导感。",
+      "traits": [
+        "很会照顾气氛，也很会照顾人",
+        "修复关系时更偏向先接住情绪",
+        "会用柔和的方式表达边界和期待",
+        "擅长把有点乱的关系重新拉回稳定"
+      ],
+      "advice": [
+        "别总把稳住场面当成自己的默认责任",
+        "照顾别人的同时，也要把自己的需要放出来",
+        "适度把主导意图说清楚，反而更省心"
+      ]
+    },
+    "reverse_gap": {
+      "label": "反差掌控型",
+      "subtitle": "看着在顺，实际上方向盘还在你手里",
+      "about": "你是「反差掌控型」：看起来像在配合，实际上心里一直在算节奏、守边界、控方向。你不一定要站到最前面，但你很少真的把主动权交出去；越是关键处，你越会悄悄把局面收回到自己能掌握的范围里。",
+      "traits": [
+        "边界感比表面看上去更强",
+        "不喜欢关系节奏脱离自己的控制范围",
+        "会先观察局势，再决定要不要接招",
+        "通常不会把底牌一次性摊开"
+      ],
+      "advice": [
+        "保持分寸很好，但别让对方总靠猜",
+        "如果已经有答案，可以少一点试探，多一点明说",
+        "允许自己偶尔把脆弱面也放出来"
+      ]
+    },
+    "high_sensitive": {
+      "label": "高敏拉扯型",
+      "subtitle": "感受很深，也更容易被牵动",
+      "about": "你是「高敏拉扯型」：行为上不一定最主动，但心理上最容易被关系牵动。你对回复、语气、空白和节奏都很敏感，连一点细小变化都会在心里放大；你不是不想稳定，而是很容易在喜欢、担心和确认之间来回拉扯。",
+      "traits": [
+        "很在意关系里的温度和回应",
+        "容易被冷淡、模糊和延迟触发不安",
+        "情绪和依恋浓度往往比较高",
+        "很重感受，也很重连结"
+      ],
+      "advice": [
+        "先区分事实和脑补，再决定怎么表达",
+        "需要确认感时，尽量直接说，不要只靠试探",
+        "给自己多留一点关系外的支撑点"
+      ]
+    }
+  },
+  "references": [
+    {
+      "title": "Reference repo: ljwtorch/attachment-style-test",
+      "url": "https://github.com/ljwtorch/attachment-style-test",
+      "note": "参考其 data/question-banks + testEngine 的数据驱动结构。"
+    },
+    {
+      "title": "PubMed 40001836",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/40001836/",
+      "note": "用于支持少数压力、依恋与关系质量的抽象维度。"
+    },
+    {
+      "title": "PubMed 39552623",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39552623/",
+      "note": "用于支持共同应对、支持感与关系满意度维度。"
+    },
+    {
+      "title": "PubMed 28695154",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/28695154/",
+      "note": "用于支持披露、公开度和社会支持维度。"
+    },
+    {
+      "title": "PubMed 31407194",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/31407194/",
+      "note": "用于支持亲密同步、情感浓度和节奏协调维度。"
+    },
+    {
+      "title": "US Copyright Office Compendium",
+      "url": "https://www.copyright.gov/comp3/docs/compendium.pdf",
+      "note": "用于支持题目和结果文案必须原创改写的原则。"
+    },
+    {
+      "title": "USPTO Subject Matter Eligibility Guidance",
+      "url": "https://www.uspto.gov/web/offices/pac/mpep/documents/2100_2106_04.htm",
+      "note": "用于提醒避免直接复制现成产品的方法表达与交互实现。"
+    }
+  ],
+  "questions": [
+    {
+      "id": "Q01",
+      "theme": "messaging",
+      "prompt": "你刚认真发出一次邀约，对方半天没回，你更可能：",
+      "options": [
+        {
+          "id": "A",
+          "text": "再补一句，把话题自然往下接",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先不催，等她忙完再顺着聊",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "表面不动，心里先开始判断她的态度",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "会开始想是不是自己哪里太主动了",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q02",
+      "theme": "dating",
+      "prompt": "第一次约会气氛很好，散场后你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "先关心她到家没有，再找机会往下约",
+          "style": "soft_lead"
+        },
+        {
+          "id": "B",
+          "text": "表面克制，但会记着她每个反应",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "C",
+          "text": "直接说今天很开心，顺手定下次见面",
+          "style": "direct_push"
+        },
+        {
+          "id": "D",
+          "text": "回去后会一直回放细节，看她是不是也有意思",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q03",
+      "theme": "pace",
+      "prompt": "暧昧对象说最近特别忙，你更可能：",
+      "options": [
+        {
+          "id": "A",
+          "text": "先理解她的状态，再留一个温柔的后手",
+          "style": "soft_lead"
+        },
+        {
+          "id": "B",
+          "text": "一边说没事，一边把关系节奏握回自己手里",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "C",
+          "text": "直接问她想不想继续，不想猜",
+          "style": "direct_push"
+        },
+        {
+          "id": "D",
+          "text": "会一边理解一边失落，容易想很多",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q04",
+      "theme": "public",
+      "prompt": "你们开始稳定接触后，要不要在朋友面前公开，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "如果关系差不多了，我会直接介绍",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会先照顾彼此安全感，再慢慢公开",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "公开这件事一定要按我的边界来",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "既想被承认，又怕被看见后有压力",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q05",
+      "theme": "repair",
+      "prompt": "吵完架后，通常最像你的第一反应是：",
+      "options": [
+        {
+          "id": "A",
+          "text": "先发消息把问题摊开，不喜欢拖",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先接住情绪，再找一个稳的时机谈",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "先拉开一点，等我把节奏重新拿稳",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "会一边想联系一边怕再被刺到",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q06",
+      "theme": "space",
+      "prompt": "伴侣说想一个人待会儿，你更可能：",
+      "options": [
+        {
+          "id": "A",
+          "text": "问清楚多久，再把后面的安排定住",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "尊重她的空间，但会留一句我在",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "可以给空间，但边界和说法得清楚",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "嘴上说好，心里会开始不安",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q07",
+      "theme": "support",
+      "prompt": "你自己很难受的时候，更像哪一种：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接说我现在需要你",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会委婉表达，希望对方感受到",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "先自己消化，不太想立刻露出来",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "很想靠近，但又怕显得太黏",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q08",
+      "theme": "social_circle",
+      "prompt": "第一次去见她很重要的朋友，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "很自然地往前站，不怕被看见",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会顾着她的场子，也顾着每个人舒服",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "先看局面，再决定自己放多少存在感",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "会特别在意自己有没有被对方接住",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q09",
+      "theme": "weekend",
+      "prompt": "聊到周末安排时，你通常更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接给方案，推进落实",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先问她舒服不舒服，再一起定",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会先看她是不是靠谱，再决定跟多少",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "如果她反应平平，我会有点失落",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q10",
+      "theme": "compliments",
+      "prompt": "伴侣很认真地夸你时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会直接接住，然后顺手回撩回去",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "表面淡定，心里会默默放很久",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "C",
+          "text": "会很认真地感受到她的用心",
+          "style": "high_sensitive"
+        },
+        {
+          "id": "D",
+          "text": "会温柔回应，也想让她觉得被肯定",
+          "style": "soft_lead"
+        }
+      ]
+    },
+    {
+      "id": "Q11",
+      "theme": "jealousy",
+      "prompt": "如果你发现对方在吃醋，你通常更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接把话挑明，顺便给她确定感",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先安抚她，再慢慢把误会理顺",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会先看她吃醋到什么程度，再决定给多少答案",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "她一吃醋我也会被情绪带起来",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q12",
+      "theme": "long_distance",
+      "prompt": "如果短期异地一阵子，你更可能：",
+      "options": [
+        {
+          "id": "A",
+          "text": "把联络频率和见面计划尽量定清楚",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会多顾着她的状态，让联系是有温度的",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我能接受距离，但节奏必须在可控范围内",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "异地很容易让我反复确认爱不爱这件事",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q13",
+      "theme": "household",
+      "prompt": "一起做点琐碎分工时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "分工不如直接定掉，效率更高",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我会自然补位，把细节照顾好",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "谁做什么、做到哪，我心里要很清楚",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "如果对方不主动，我会默默难受",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q14",
+      "theme": "define_relationship",
+      "prompt": "关系有点模糊的时候，你通常会：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接问，我们现在到底算什么",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先感受对方有没有准备好，再慢慢确认",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我不会先掀牌，但会把主动权留在自己这边",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "越模糊越会让我陷进很多情绪里",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q15",
+      "theme": "celebration",
+      "prompt": "纪念日要怎么过，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接提计划，甚至把流程都定好",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我会记住她喜欢什么，把体贴放进细节里",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "过不过都行，但要按我舒服的边界来",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "我会很在意她有没有把这件事放在心上",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q16",
+      "theme": "silence",
+      "prompt": "她突然安静下来，不太愿意讲话时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会直接问清楚发生了什么",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先陪着，让她感觉安全再慢慢开口",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "会先收住自己，等她愿意给出边界再谈",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "她一沉默，我很容易先慌",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q17",
+      "theme": "boundaries",
+      "prompt": "当你意识到某件事让你不舒服时，你更可能：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接把不舒服点说出来",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会尽量照顾气氛，但还是会讲清楚",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会很明确地把边界立住",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "会想说又怕说了关系变冷",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q18",
+      "theme": "comfort",
+      "prompt": "如果你先察觉到她情绪不对，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接问她怎么了，不爱绕",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会先递水、陪着、找一个让她舒服的入口",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "会先看她想不想被靠近，再出手",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "我很容易一下子感到她的情绪重量",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q19",
+      "theme": "physical_closeness",
+      "prompt": "你想和她更亲近一点时，更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会把喜欢和想靠近说得比较明白",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会用很自然的照顾和贴近去递信号",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "除非我确定安全，不然不会轻易多迈一步",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "会很想靠近，但也会担心被拒绝",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q20",
+      "theme": "pda",
+      "prompt": "公共场合的牵手或拥抱，对你来说更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "自然就做了，不太需要绕弯",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "看她是否放松，我会顺着照顾氛围",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "可以，但得在我认可的边界里",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "我会很在意这是不是她在确认我",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q21",
+      "theme": "stress",
+      "prompt": "工作压力很大时，你和伴侣相处更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "直接讲自己状态，也讲清楚需要什么",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我会尽量把关系维护住，不让压力乱撞到她",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会先把自己的边界关严一点",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "压力一大，我就更想抓住关系里的确定感",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q22",
+      "theme": "ex_topic",
+      "prompt": "聊到前任话题时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "可以直接聊，没必要避",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会先确认她聊这个是不是舒服",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会观察她说前任时到底想表达什么",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "如果她提得多，我会有点被牵动",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q23",
+      "theme": "decision",
+      "prompt": "当你们要做一个小决定时，你通常更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "我会很快给出方向",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会先看看谁现在更需要被照顾",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我不抢着定，但最后会把决定卡在自己舒服的位置",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "如果对方太随意，我会容易没安全感",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q24",
+      "theme": "late_night",
+      "prompt": "深夜聊天越聊越投入时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会顺势把喜欢和期待说清楚",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会把对方情绪和节奏照顾得很细",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会聊，但不会轻易把底牌全翻出来",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "很容易在深夜把情绪和依赖都放大",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q25",
+      "theme": "misunderstanding",
+      "prompt": "伴侣误会了你，你通常更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "立刻解释清楚，不想让误会发酵",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先缓她情绪，再把来龙去脉说清楚",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会先判断这场误会值不值得我解释这么多",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "会很怕她是不是因此不信我了",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q26",
+      "theme": "social_media",
+      "prompt": "在社交平台和伴侣互动这件事上，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "喜欢就会公开互动，不太藏",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会先看对方舒适度，再决定互动方式",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我对公开这件事的边界会定得很细",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "如果她从不互动，我会容易想太多",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q27",
+      "theme": "travel",
+      "prompt": "一起出门旅行时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "路线、节奏、重点我都愿意先定好",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我会把她的喜好和舒适度照顾进去",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我不抢风头，但关键节点必须在掌控里",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "旅行会让我更需要很多确认感",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q28",
+      "theme": "stability",
+      "prompt": "关系从热烈期进入平稳期时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会主动制造新节奏，不想平淡掉",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "平稳对我来说是安心，我会继续把关系养细",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "平稳很好，但边界和秩序必须更清楚",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "一平稳我反而会开始怕她是不是没那么喜欢了",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q29",
+      "theme": "low_expression_partner",
+      "prompt": "如果伴侣很少主动表达爱意，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会直接问她到底怎么想",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先看她是不是在用别的方式表达",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会先拉开一点，把判断权留给自己",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "很容易因为她不表达就情绪波动",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q30",
+      "theme": "very_active_partner",
+      "prompt": "如果对方推进关系的速度特别快，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "如果也喜欢，我会直接接招并继续往前推",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我会温柔接住，但也会帮关系降噪稳速",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会先把边界和规则放清楚",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "我会又开心又慌，很容易一下子陷进去",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q31",
+      "theme": "money",
+      "prompt": "聊到花销和付出时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "不如直接讲清楚规则，省得猜",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我会更在意彼此有没有被好好照顾到",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "界限一定要清楚，模糊最容易让我抽离",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "如果我感觉自己付出更多，会很受伤",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q32",
+      "theme": "gaze",
+      "prompt": "在外面碰到旁人目光时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "不太会因为别人收住自己",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "会看对方是否舒服，再决定怎么表现",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会优先保住自己的边界和安全感",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "外界一有目光，我就很容易紧绷",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q33",
+      "theme": "dependence",
+      "prompt": "当你发现自己开始依赖她时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会把这种需要直接说出来",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我能接受依赖，也会努力让它是温柔的",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会警惕自己不要失去主动和边界",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "依赖一上来，我就会变得特别在意她",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q34",
+      "theme": "change_of_plans",
+      "prompt": "伴侣临时改变约好的计划时，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会直接说明我能接受到什么程度",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "先关心是不是她真的有事，再调整",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我可以改，但这种事不能变成惯例",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "嘴上说没事，心里会被影响很久",
+          "style": "high_sensitive"
+        }
+      ]
+    },
+    {
+      "id": "Q35",
+      "theme": "future",
+      "prompt": "如果关系要往同居或长期走，你更像：",
+      "options": [
+        {
+          "id": "A",
+          "text": "会直接讨论现实安排和下一步",
+          "style": "direct_push"
+        },
+        {
+          "id": "B",
+          "text": "我会想把日常和照顾都慢慢铺稳",
+          "style": "soft_lead"
+        },
+        {
+          "id": "C",
+          "text": "我会先把边界、节奏和空间谈清楚",
+          "style": "reverse_gap"
+        },
+        {
+          "id": "D",
+          "text": "我会很想走长，但也会因此更害怕失去",
+          "style": "high_sensitive"
+        }
+      ]
+    }
+  ]
+}
