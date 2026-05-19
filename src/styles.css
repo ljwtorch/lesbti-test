@@ -547,6 +547,7 @@ a {
 
 .progress-fill {
   background: linear-gradient(90deg, #2f241f 0%, #9e5c39 50%, #d86a3e 100%);
+  transition: width 400ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 /* Quiz hero */
@@ -687,6 +688,7 @@ a {
 }
 
 .confirm-bubble {
+  --confirm-bubble-x: 0;
   position: absolute;
   top: calc(100% + 12px);
   left: 0;
@@ -742,11 +744,11 @@ a {
 @keyframes confirmBubbleIn {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translate(var(--confirm-bubble-x), -6px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translate(var(--confirm-bubble-x), 0);
   }
 }
 
@@ -1264,11 +1266,10 @@ a {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 18px;
+  justify-content: center;
+  gap: 12px;
   width: 100%;
-  max-width: 860px;
-  min-height: 353px;
-  padding: 30px 24px 24px;
+  padding: 20px 24px 18px;
   text-align: center;
   border-radius: 24px;
 }
@@ -1545,6 +1546,17 @@ a {
   cursor: not-allowed;
 }
 
+.confirm-leave-button {
+  background: rgba(216, 106, 62, 0.1);
+  border-color: rgba(216, 106, 62, 0.25);
+  color: #b04d2b;
+}
+
+.confirm-leave-button:hover:not(:disabled) {
+  background: rgba(216, 106, 62, 0.18);
+  border-color: rgba(216, 106, 62, 0.4);
+}
+
 .landing-style-icon.accent-ember {
   background: rgba(246, 226, 214, 0.92);
   color: #c16d49;
@@ -1600,8 +1612,8 @@ a {
 
 @media (max-width: 720px) {
   .landing-hero-panel {
-    padding: 24px 18px 20px;
-    gap: 14px;
+    padding: 16px 18px 14px;
+    gap: 10px;
   }
 
   .landing-hero-mark {

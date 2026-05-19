@@ -249,10 +249,21 @@ export function drawQuestions(bank: RelationshipBank) {
     ? shuffleItems(questions).slice(0, drawCount)
     : questions.slice(0, drawCount);
 
-  return selectedQuestions.map((question) => ({
-    ...question,
-    options: shuffleOptionOrder ? shuffleItems(question.options) : question.options,
-  }));
+  const optionIds = ["A", "B", "C", "D"];
+
+  return selectedQuestions.map((question) => {
+    const shuffledOptions = shuffleOptionOrder
+      ? shuffleItems(question.options)
+      : question.options;
+
+    return {
+      ...question,
+      options: shuffledOptions.map((option, index) => ({
+        ...option,
+        id: optionIds[index],
+      })),
+    };
+  });
 }
 
 function calculateStyleCentroidDistances(

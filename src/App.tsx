@@ -233,10 +233,11 @@ function App() {
     "约 6 - 8 分钟",
   ];
   const landingInstructions = [
+    "该测试相关题目比较保守，信息来源于网络",
     `进入答题页后，需要完成 ${bank.draw_policy.required_answer_count} 道题，系统会自动记录本地进度`,
     "请结合你在亲密关系中的真实感受与默认反应作答，不用刻意选择“更好”的答案",
     "题目没有标准答案，结果用于观察关系气场与互动倾向，不是身份判定或心理诊断",
-    "完成测试后，你会看到主结果、8 维关系拆解，以及派生气场条",
+    "完成测试后，你会看到主结果、4 种关系气场，维度拆解和 8 维倾向雷达",
     "如有问题请联系：vvmailbox@qq.com"
   ];
 
@@ -410,9 +411,9 @@ function App() {
                   {agreed ? "✓" : ""}
                 </span>
                 <span>
-                  我已阅读并理解测试说明与免责声明
+                  我已阅读并同意
                   <button className="inline-button" onClick={() => setShowTerms(true)} type="button">
-                    查看说明
+                    用户使用条款&免责声明
                   </button>
                 </span>
               </label>
@@ -491,7 +492,7 @@ function App() {
                         <button className="ghost-button" onClick={() => setShowQuitConfirm(false)} type="button">
                           继续答题
                         </button>
-                        <button className="start-button" onClick={returnToLanding} type="button">
+                        <button className="ghost-button confirm-leave-button" onClick={returnToLanding} type="button">
                           返回首页
                         </button>
                       </div>

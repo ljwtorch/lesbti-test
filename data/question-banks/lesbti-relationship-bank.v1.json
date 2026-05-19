@@ -12,7 +12,7 @@
     "mode": "random_draw",
     "draw_count": 28,
     "shuffle_question_order": true,
-    "shuffle_option_order": false,
+    "shuffle_option_order": true,
     "required_answer_count": 28
   },
   "notices": [
