@@ -3,7 +3,7 @@
 ## 项目约束
 
 - 包管理器必须使用 `pnpm`。
-- 技术栈应与参考项目 `attachment-style-test` 保持一致，使用 `Vite + React + TypeScript`。
+- 技术栈应使用 `Vite + React + TypeScript`。
 - 应优先采用数据驱动结构，题库与结果内容来自本仓库本地 JSON，而不是写死在组件里。
 - 答题主流程应与参考项目基本一致，至少包含 `landing`、`quiz`、`result` 三个视图，以及本地进度持久化能力。
 - 结果模型必须基于当前仓库的 `LesBTI` 文档与题库，输出主结果、8 维关系维度和派生气场条。

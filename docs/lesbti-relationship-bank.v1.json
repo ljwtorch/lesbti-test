@@ -9,11 +9,11 @@
   "question_format": "single_choice_four_options",
   "question_count": 35,
   "draw_policy": {
-    "mode": "fixed_order",
-    "draw_count": 35,
-    "shuffle_question_order": false,
+    "mode": "random_draw",
+    "draw_count": 28,
+    "shuffle_question_order": true,
     "shuffle_option_order": false,
-    "required_answer_count": 35
+    "required_answer_count": 28
   },
   "notices": [
     "本题库面向关系互动风格的自我探索，不构成医学、心理或身份诊断。",

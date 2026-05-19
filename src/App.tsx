@@ -226,12 +226,25 @@ function App() {
     ...style,
     summary: bank.result_profiles[style.id].subtitle,
   }));
+  const landingHighlights = [
+    `${bank.question_count} 道场景题`,
+    `${bank.styles.length} 种关系气场`,
+    ` 8 维倾向雷达`,
+    "约 6 - 8 分钟",
+  ];
+  const landingInstructions = [
+    `进入答题页后，需要完成 ${bank.draw_policy.required_answer_count} 道题，系统会自动记录本地进度`,
+    "请结合你在亲密关系中的真实感受与默认反应作答，不用刻意选择“更好”的答案",
+    "题目没有标准答案，结果用于观察关系气场与互动倾向，不是身份判定或心理诊断",
+    "完成测试后，你会看到主结果、8 维关系拆解，以及派生气场条",
+    "如有问题请联系：vvmailbox@qq.com"
+  ];
 
   const consentDetails = useMemo(
     () => [
-      "本测试默认只在你的浏览器本地保存进度，用于继续答题或回看结果。",
-      "测试结果仅用于自我探索与关系反思，不构成心理诊断、医疗建议或身份判定。",
-      "题库基于公开研究主题自主撰写，避免直接复用现成量表或商业测试表达。",
+      "本测试默认只在你的浏览器本地保存进度，用于继续答题或回看结果",
+      "测试结果仅用于自我探索与关系反思，不构成心理诊断、医疗建议或身份判定",
+      "题库基于公开研究主题自主撰写，避免直接复用现成量表或商业测试表达",
     ],
     [],
   );
@@ -330,109 +343,64 @@ function App() {
       <div className="ambient ambient-left" aria-hidden="true" />
       <div className="ambient ambient-right" aria-hidden="true" />
 
-      <main className="app-frame">
+      <main className={`app-frame ${view === "landing" ? "landing-frame" : view === "quiz" ? "quiz-frame" : "result-frame"}`}>
         {view === "landing" ? (
           <>
-            <section className="hero-panel">
-              <div className="hero-copy">
-                <p className="eyebrow">LesBTI Relationship Atmosphere Test</p>
-                <h1>测测你在关系里的气场，更像哪一种推进方式</h1>
+            <section className="hero-panel landing-hero-panel">
+              <div className="hero-mark landing-hero-mark" aria-hidden="true">
+                <span className="hero-mark-icon">{renderStyleGlyph("soft_lead")}</span>
+              </div>
+              <div className="hero-copy hero-copy-centered landing-hero-copy">
+                <p className="eyebrow">Relationship Atmosphere Reflection</p>
+                <h1>LesBTI 关系气场测试</h1>
                 <p className="hero-text">
-                  这不是身份鉴定，也不是心理诊断，而是一份围绕关系节奏、边界感、亲密表达与照顾方式展开的气场报告。
+                  从你的关系反应里，看见更常出现的互动节奏、边界感与亲密表达方式
                 </p>
-
-                <div className="hero-pills">
-                  <span>35 道原创场景题</span>
-                  <span>固定流程，便于首版调试</span>
-                  <span>约 6 - 8 分钟</span>
-                </div>
-
-                <div className="hero-actions">
-                  {hasSavedSession ? (
-                    <button className="secondary-button" onClick={continueQuiz} type="button">
-                      {result ? "查看上次结果" : "继续上次答题"}
-                    </button>
-                  ) : null}
-                  <button
-                    className="primary-button"
-                    disabled={!agreed}
-                    onClick={startQuiz}
-                    type="button"
-                  >
-                    开始测试
-                  </button>
+                <div className="hero-pills landing-hero-pills">
+                  {landingHighlights.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
                 </div>
               </div>
+            </section>
 
-              <div className="hero-visual" aria-hidden="true">
-                <div className="hero-orbit hero-orbit-large" />
-                <div className="hero-orbit hero-orbit-small" />
-                <div className="hero-card-stack">
+            <section className="landing-stack">
+              <article className="info-panel intro-panel landing-intro-panel">
+                <p className="section-label">关系气场是什么</p>
+                <p>
+                  这份测试关注的是你在亲密关系里的互动倾向，包括推进节奏、边界感、照顾方式和情绪表达。结果会用更轻量的“关系气场”语言呈现，而不是给出身份诊断
+                </p>
+
+                <div className="landing-style-grid">
                   {topStyleCards.map((style) => (
-                    <article
-                      className={`style-preview-card ${styleThemes[style.id].accentClass}`}
-                      key={style.id}
-                    >
-                      <div className="style-preview-head">
-                        <span className="style-preview-icon">{renderStyleGlyph(style.id)}</span>
-                        <span className="style-preview-badge">{styleThemes[style.id].badge}</span>
-                      </div>
-                      <h2>{style.label}</h2>
+                    <article className="landing-style-card" key={style.id}>
+                      <span className={`landing-style-icon ${styleThemes[style.id].accentClass}`}>
+                        {renderStyleGlyph(style.id)}
+                      </span>
+                      <h3>{style.label}</h3>
                       <p>{style.summary}</p>
                     </article>
                   ))}
                 </div>
-              </div>
-            </section>
-
-            <section className="content-grid">
-              <article className="info-panel">
-                <p className="section-label">项目定位</p>
-                <h2>从互动细节出发，而不是从标签倒推你是谁</h2>
-                <p>
-                  题目全部使用关系场景，不要求你抽象地评价自己。每个选项都映射一种更常见的反应模式，再汇总成主结果、8
-                  维拆解和派生气场条。
-                </p>
-                <ul className="bullet-list">
-                  <li>主结果给出本次最明显的关系气场倾向</li>
-                  <li>8 维拆解告诉你是哪些互动侧面在拉高结果</li>
-                  <li>派生气场条保留传播感，但不把梗标签当作身份结论</li>
-                </ul>
               </article>
 
-              <article className="info-panel notice-panel">
-                <p className="section-label">测试边界</p>
-                <h2>结果适合自我理解，不替代现实判断</h2>
-                <div className="notice-list">
-                  {bank.notices.map((notice) => (
-                    <p key={notice}>{notice}</p>
+              <article className="info-panel intro-panel landing-intro-panel">
+                <p className="section-label">测试说明</p>
+                <ul className="bullet-list landing-bullet-list">
+                  {landingInstructions.map((item) => (
+                    <li key={item}>{item}</li>
                   ))}
-                </div>
+                </ul>
+                {/*<div className="notice-list">*/}
+                {/*  {bank.notices.map((notice) => (*/}
+                {/*    <p key={notice}>{notice}</p>*/}
+                {/*  ))}*/}
+                {/*</div>*/}
               </article>
             </section>
 
-            <section className="metric-panel">
-              <div className="metric-panel-head">
-                <p className="section-label">结果结构</p>
-                <h2>这份报告会怎么读</h2>
-              </div>
-
-              <div className="metric-grid">
-                {bank.dimensions.map((dimension) => (
-                  <article className="metric-card" key={dimension.id}>
-                    <div className="metric-scale">
-                      <span>{dimension.left_label}</span>
-                      <span>{dimension.right_label}</span>
-                    </div>
-                    <h3>{dimension.label}</h3>
-                    <p>{dimension.description}</p>
-                  </article>
-                ))}
-              </div>
-            </section>
-
-            <section className="consent-panel">
-              <label className="consent-row">
+            <section className="consent-panel landing-consent-panel">
+              <label className="consent-row landing-consent-row">
                 <input
                   checked={agreed}
                   onChange={(event) => setAgreed(event.target.checked)}
@@ -442,110 +410,113 @@ function App() {
                   {agreed ? "✓" : ""}
                 </span>
                 <span>
-                  我已阅读并理解这是一份自我探索测试。
+                  我已阅读并理解测试说明与免责声明
                   <button className="inline-button" onClick={() => setShowTerms(true)} type="button">
                     查看说明
                   </button>
                 </span>
               </label>
+
+              <div className="cta-wrap">
+                {hasSavedSession ? (
+                  <button className="ghost-button" onClick={continueQuiz} type="button">
+                    {result ? "查看上次结果" : "继续上次答题"}
+                  </button>
+                ) : null}
+                <button
+                  className="start-button"
+                  disabled={!agreed}
+                  onClick={startQuiz}
+                  type="button"
+                >
+                  开始答题
+                </button>
+              </div>
             </section>
           </>
         ) : null}
 
         {view === "quiz" && currentQuestion ? (
           <>
-            <section className="quiz-header">
-              <div>
-                <p className="eyebrow">Question Flow</p>
-                <h1>
-                  第 {currentIndex + 1} 题 <span>/ 共 {drawnQuestions.length} 题</span>
-                </h1>
-                <p className="quiz-caption">优先选择更接近你平时默认反应的那个选项。</p>
-              </div>
-
-              <div className="quiz-actions">
-                <button
-                  className="secondary-button"
-                  disabled={currentIndex === 0}
-                  onClick={handlePreviousQuestion}
-                  type="button"
-                >
-                  上一题
-                </button>
-                <button
-                  className="secondary-button"
-                  onClick={() => setShowQuitConfirm((previous) => !previous)}
-                  type="button"
-                >
-                  返回首页
-                </button>
-              </div>
-            </section>
-
-            <section className="progress-panel">
-              <div className="progress-meta">
-                <span>已完成 {answeredCount} 题</span>
-                <span>{formatPercent(progressPercent)}</span>
+            <section className="hero-card quiz-hero-card">
+              <div className="quiz-hero-top">
+                <div className="quiz-hero-copy">
+                  <p className="hero-kicker">Question Flow</p>
+                  <h1>
+                    第 {currentIndex + 1} 题 <span>/ 共 {drawnQuestions.length} 题</span>
+                  </h1>
+                </div>
               </div>
               <div className="progress-track" aria-hidden="true">
                 <span className="progress-fill" style={{ width: `${progressPercent}%` }} />
               </div>
             </section>
 
-            <section className="question-panel">
-              <p className="section-label">当前场景</p>
-              <h2>{currentQuestion.prompt}</h2>
-
-              <div className="option-list" role="list">
-                {currentQuestion.options.map((option) => (
-                  <button
-                    className="option-card"
-                    key={`${currentQuestion.id}-${option.id}`}
-                    onClick={() => handleSelectOption(option.id)}
-                    type="button"
-                  >
-                    <span className="option-id">{option.id}</span>
-                    <span className="option-copy">{option.text}</span>
-                  </button>
-                ))}
+            <section className="content-card question-card">
+              <div className="section-head">
+                <p className="section-kicker">当前题目</p>
+                <h2>{currentQuestion.prompt}</h2>
               </div>
 
-              <p className="question-footnote">单题作答模式下，选择任一选项后会自动进入下一题。</p>
+              <div className="options-grid" role="list">
+                {currentQuestion.options.map((option) => {
+                  const isSelected = answers[currentQuestion.id] === option.id;
+                  return (
+                    <button
+                      className={`option-card ${isSelected ? "is-selected" : ""}`}
+                      key={`${currentQuestion.id}-${option.id}`}
+                      onClick={() => handleSelectOption(option.id)}
+                      type="button"
+                    >
+                      <span className="option-badge">{option.id}</span>
+                      <span className="option-copy">{option.text}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-              {showQuitConfirm ? (
-                <div className="inline-confirm" role="alertdialog" aria-labelledby="quit-confirm-title">
-                  <h3 id="quit-confirm-title">确认要返回首页吗？</h3>
-                  <p>当前进度会保存在本地，回到首页后仍可继续答题或查看结果。</p>
-                  <div className="inline-confirm-actions">
-                    <button className="secondary-button" onClick={() => setShowQuitConfirm(false)} type="button">
-                      继续答题
-                    </button>
-                    <button className="primary-button" onClick={returnToLanding} type="button">
-                      返回首页
-                    </button>
-                  </div>
+              <div className="question-actions">
+                <div className="question-action-buttons">
+                  <button className="ghost-button" disabled={currentIndex === 0} onClick={handlePreviousQuestion} type="button">
+                    上一题
+                  </button>
+                  <button className="ghost-button" onClick={() => setShowQuitConfirm((prev) => !prev)} type="button">
+                    返回首页
+                  </button>
+                  {showQuitConfirm ? (
+                    <div className="confirm-bubble" role="alertdialog" aria-labelledby="quit-confirm-title">
+                      <h3 id="quit-confirm-title">确认要返回首页吗？</h3>
+                      <p>当前进度会保存在本地，回到首页后仍可继续答题或查看结果。</p>
+                      <div className="confirm-bubble-actions">
+                        <button className="ghost-button" onClick={() => setShowQuitConfirm(false)} type="button">
+                          继续答题
+                        </button>
+                        <button className="start-button" onClick={returnToLanding} type="button">
+                          返回首页
+                        </button>
+                      </div>
+                    </div>
+                  ) : null}
                 </div>
-              ) : null}
+                <p className="question-footnote">当前为单题作答模式，选择任一选项后将自动进入下一题。</p>
+              </div>
             </section>
           </>
         ) : null}
 
         {view === "result" && result ? (
           <>
-            <section className={`result-hero ${styleThemes[result.primaryStyle].accentClass}`}>
-              <div className="result-hero-top">
-                <div className="result-icon-wrap">{renderStyleGlyph(result.primaryStyle)}</div>
-                <div>
-                  <p className="eyebrow">{bank.result_page_copy.report_title}</p>
-                  <h1>{result.primaryProfile.label}</h1>
-                  <p className="result-subtitle">{result.primaryProfile.subtitle}</p>
-                </div>
+            <section className="hero-card result-hero-card">
+              <div className="result-hero-mark" aria-hidden="true">
+                <span className="result-mark-icon">{renderStyleGlyph(result.primaryStyle)}</span>
               </div>
+              <p className="hero-kicker">{bank.result_page_copy.report_title}</p>
+              <h1>{result.primaryProfile.label}</h1>
+              <p className="hero-text result-subtitle">{result.primaryProfile.subtitle}</p>
 
               <div className="result-pill-row">
-                <span>完成 {result.answeredCount} / {bank.draw_policy.required_answer_count} 题</span>
+                <span>已完成 {result.answeredCount} / {bank.draw_policy.required_answer_count} 题</span>
                 <span>主类型占比 {formatPercent(result.percentages[result.primaryStyle])}</span>
-                <span>题库版本 {bank.version}</span>
               </div>
 
               {result.closeStyles.length ? (
@@ -555,46 +526,18 @@ function App() {
               ) : null}
             </section>
 
-            <section className="result-layout">
-              <article className="report-panel">
-                <p className="section-label">{bank.result_page_copy.about_title}</p>
-                <h2>{result.primaryProfile.label}</h2>
-                <p className="long-copy">{result.primaryProfile.about}</p>
-
-                <div className="top-dimension-row">
-                  {result.topDimensions.map((dimension) => (
-                    <div className="top-dimension-chip" key={dimension.id}>
-                      <strong>{dimension.label}</strong>
-                      <span>{formatPercent(dimension.value)}</span>
-                    </div>
-                  ))}
+            <section className="result-chart-row">
+              <section className="content-card distribution-card">
+                <div className="section-head">
+                  <p className="section-kicker">{bank.result_page_copy.distribution_title}</p>
                 </div>
-              </article>
-
-              <article className="report-panel">
-                <p className="section-label">8 维雷达</p>
-                <h2>你的关系气场轮廓</h2>
-                <RadarChart
-                  dimensions={bank.dimensions.map((dimension) => ({
-                    id: dimension.id,
-                    label: dimension.label,
-                    value: result.dimensionPercentages[dimension.id],
-                  }))}
-                />
-              </article>
-            </section>
-
-            <section className="result-layout">
-              <article className="report-panel">
-                <p className="section-label">{bank.result_page_copy.distribution_title}</p>
-                <h2>四种主气场在本次作答中的分布</h2>
 
                 <div className="distribution-list">
                   {result.distribution.map((item) => (
                     <article className="distribution-item" key={item.styleId}>
                       <div className="distribution-head">
-                        <div className="distribution-title-wrap">
-                          <span className={`distribution-glyph ${styleThemes[item.styleId].accentClass}`}>
+                        <div className="distribution-label-wrap">
+                          <span className={`distribution-icon ${styleThemes[item.styleId].accentClass}`} aria-hidden="true">
                             {renderStyleGlyph(item.styleId)}
                           </span>
                           <div>
@@ -604,7 +547,8 @@ function App() {
                         </div>
                         <strong>{formatPercent(item.percentage)}</strong>
                       </div>
-                      <div className="distribution-track" aria-hidden="true">
+
+                      <div className="distribution-bar" aria-hidden="true">
                         <span
                           className={`distribution-fill ${styleThemes[item.styleId].accentClass}`}
                           style={{ width: `${Math.max(item.percentage, 4)}%` }}
@@ -613,92 +557,88 @@ function App() {
                     </article>
                   ))}
                 </div>
-              </article>
-            </section>
+              </section>
 
-            <section className="result-layout">
-              <article className="report-panel">
-                <p className="section-label">{bank.result_page_copy.traits_title}</p>
-                <h2>8 维关系拆解</h2>
-
-                <div className="dimension-list">
-                  {bank.dimensions.map((dimension) => (
-                    <article className="dimension-item" key={dimension.id}>
-                      <div className="dimension-head">
-                        <div>
-                          <h3>{dimension.label}</h3>
-                          <p>{dimension.description}</p>
-                        </div>
-                        <strong>{formatPercent(result.dimensionPercentages[dimension.id])}</strong>
-                      </div>
-
-                      <div className="dimension-track" aria-hidden="true">
-                        <span
-                          className="dimension-fill"
-                          style={{ width: `${Math.max(result.dimensionPercentages[dimension.id], 4)}%` }}
-                        />
-                      </div>
-
-                      <div className="dimension-scale">
-                        <span>{dimension.left_label}</span>
-                        <span>{dimension.right_label}</span>
-                      </div>
-                    </article>
-                  ))}
+              <section className="content-card radar-card">
+                <div className="section-head">
+                  <p className="section-kicker">8 维雷达</p>
                 </div>
-              </article>
-
-              <article className="report-panel">
-                <p className="section-label">{bank.result_page_copy.bars_title}</p>
-                <h2>派生气场条</h2>
-
-                <div className="derived-list">
-                  {result.derivedBars.map((bar) => (
-                    <article className="derived-item" key={bar.id}>
-                      <div className="derived-head">
-                        <span>{bar.label}</span>
-                        <strong>{formatPercent(bar.value)}</strong>
-                      </div>
-                      <div className="derived-track" aria-hidden="true">
-                        <span className="derived-fill" style={{ width: `${Math.max(bar.value, 4)}%` }} />
-                      </div>
-                    </article>
-                  ))}
-                </div>
-              </article>
+                <RadarChart
+                  dimensions={bank.dimensions.map((dimension) => ({
+                    id: dimension.id,
+                    label: dimension.label,
+                    value: result.dimensionPercentages[dimension.id],
+                  }))}
+                />
+              </section>
             </section>
 
-            <section className="result-layout">
-              <article className="report-panel">
-                <p className="section-label">你在关系里可能更常见的表现</p>
-                <ul className="detail-list">
-                  {result.primaryProfile.traits.map((trait) => (
-                    <li key={trait}>{trait}</li>
-                  ))}
-                </ul>
-              </article>
+            <section className="content-card dimension-card">
+              <div className="section-head">
+                <p className="section-kicker">{bank.result_page_copy.traits_title}</p>
+              </div>
 
-              <article className="report-panel">
-                <p className="section-label">{bank.result_page_copy.advice_title}</p>
-                <ul className="detail-list">
-                  {result.primaryProfile.advice.map((advice) => (
-                    <li key={advice}>{advice}</li>
-                  ))}
-                </ul>
-              </article>
-            </section>
+              <div className="dimension-list">
+                {bank.dimensions.map((dimension) => (
+                  <article className="dimension-item" key={dimension.id}>
+                    <div className="dimension-head">
+                      <div>
+                        <h3>{dimension.label}</h3>
+                        <p>{dimension.description}</p>
+                      </div>
+                      <strong>{formatPercent(result.dimensionPercentages[dimension.id])}</strong>
+                    </div>
 
-            <section className="footer-panel">
-              <p>{bank.result_page_copy.footer_disclaimer}</p>
-              <div className="result-footer-actions">
-                <button className="secondary-button" onClick={returnToLanding} type="button">
-                  返回首页
-                </button>
-                <button className="primary-button" onClick={restartQuiz} type="button">
-                  再测一次
-                </button>
+                    <div className="dimension-track" aria-hidden="true">
+                      <span
+                        className="dimension-fill"
+                        style={{ width: `${Math.max(result.dimensionPercentages[dimension.id], 4)}%` }}
+                      />
+                    </div>
+
+                    <div className="dimension-scale">
+                      <span>{dimension.left_label}</span>
+                      <span>{dimension.right_label}</span>
+                    </div>
+                  </article>
+                ))}
               </div>
             </section>
+
+            <section className="content-card result-copy-card">
+              <div className="result-copy-grid">
+                <article className="result-detail-card">
+                  <div className="section-head">
+                    <p className="section-kicker">{bank.result_page_copy.about_title}</p>
+                  </div>
+                  <p className="long-copy">{result.primaryProfile.about}</p>
+                </article>
+
+                <article className="result-detail-card">
+                  <div className="section-head">
+                    <p className="section-kicker">{bank.result_page_copy.advice_title}</p>
+                  </div>
+                  <ul className="detail-list">
+                    {result.primaryProfile.advice.map((advice) => (
+                      <li key={advice}>{advice}</li>
+                    ))}
+                  </ul>
+                </article>
+              </div>
+            </section>
+
+            <section className="content-card result-footer-card">
+              <p>{bank.result_page_copy.footer_disclaimer}</p>
+            </section>
+
+            <div className="result-actions" role="group" aria-label="结果页操作">
+              <button className="ghost-button" onClick={returnToLanding} type="button">
+                返回首页
+              </button>
+              <button className="start-button" onClick={restartQuiz} type="button">
+                再测一次
+              </button>
+            </div>
           </>
         ) : null}
       </main>
@@ -715,7 +655,7 @@ function App() {
             <div className="modal-head">
               <div>
                 <p className="section-label">使用说明</p>
-                <h2 id="terms-title">开始测试前请先了解这些边界</h2>
+                <h2 id="terms-title">开始测试前请先了解这些：</h2>
               </div>
               <button className="close-button" onClick={() => setShowTerms(false)} type="button">
                 ×
@@ -726,10 +666,6 @@ function App() {
               {consentDetails.map((item) => (
                 <p key={item}>{item}</p>
               ))}
-              <p>
-                参考来源包含：
-                {bank.references.map((reference) => reference.title).join("、")}。
-              </p>
             </div>
           </section>
         </div>
