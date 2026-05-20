@@ -1146,6 +1146,68 @@ a {
   margin-top: 12px;
 }
 
+.announcement-modal {
+  width: min(100%, 648px);
+  padding: 18px 20px 20px;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.announcement-backdrop {
+  opacity: 1;
+  transition: opacity 220ms ease;
+}
+
+.announcement-backdrop.is-closing {
+  opacity: 0;
+}
+
+.announcement-modal.is-closing {
+  opacity: 0;
+  transform: translateY(10px) scale(0.98);
+}
+
+.announcement-modal .modal-head {
+  align-items: center;
+}
+
+.announcement-modal .modal-head h3 {
+  margin: 8px 0 0;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.announcement-modal .modal-body {
+  margin-top: 10px;
+}
+
+.announcement-list {
+  display: grid;
+  gap: 10px;
+}
+
+.announcement-item {
+  padding: 14px 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(63, 42, 28, 0.1);
+  background: rgba(255, 252, 248, 0.8);
+}
+
+.announcement-item h3 {
+  margin: 0;
+  font-size: 18px;
+  line-height: 1.4;
+  color: #3f2a1c;
+}
+
+.announcement-item p {
+  margin: 10px 0 0;
+  white-space: pre-wrap;
+}
+
 .primary-button:focus-visible,
 .secondary-button:focus-visible,
 .start-button:focus-visible,
@@ -1220,6 +1282,15 @@ a {
   .modal-panel {
     padding: 18px;
     border-radius: 22px;
+  }
+
+  .announcement-item {
+    padding: 13px 14px;
+    border-radius: 16px;
+  }
+
+  .announcement-modal {
+    padding: 16px;
   }
 
   .hero-copy h1,

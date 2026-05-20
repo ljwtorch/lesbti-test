@@ -9,6 +9,7 @@ import {
   type RelationshipBank,
   type StyleId,
 } from "./testEngine";
+import { AnnouncementModal } from "./AnnouncementModal";
 import { RadarChart } from "./radar";
 
 type AppView = "landing" | "quiz" | "result";
@@ -213,6 +214,7 @@ function App() {
   const [agreed, setAgreed] = useState(true);
   const [showTerms, setShowTerms] = useState(false);
   const [showQuitConfirm, setShowQuitConfirm] = useState(false);
+  const [showAnnouncement, setShowAnnouncement] = useState(restoredQuizState.view === "landing");
   const [drawnQuestions, setDrawnQuestions] = useState<QuestionItem[]>(restoredQuizState.drawnQuestions);
   const [answers, setAnswers] = useState<QuizAnswerMap>(restoredQuizState.answers);
   const [currentIndex, setCurrentIndex] = useState(restoredQuizState.currentIndex);
@@ -434,6 +436,11 @@ function App() {
                 </button>
               </div>
             </section>
+
+            <AnnouncementModal
+              onClose={() => setShowAnnouncement(false)}
+              open={showAnnouncement}
+            />
           </>
         ) : null}
 
